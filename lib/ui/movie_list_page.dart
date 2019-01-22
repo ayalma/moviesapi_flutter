@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
@@ -5,6 +6,7 @@ import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_widget.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class MovieListPage extends StatefulWidget {
   @override
@@ -13,44 +15,33 @@ class MovieListPage extends StatefulWidget {
 
 class _MovieListPageState extends State<MovieListPage> {
   final MovieListBloc _bloc = MovieListBloc(MovieRepository(MovieApi()));
-  final _scrollController = ScrollController();
-  final _scrollThreshold = 200.0;
-
-  _MovieListPageState() {
-    _scrollController.addListener(_onScroll);
-  }
+  final _searchKey = Key("search");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Movie api"),
-        actions: <Widget>[
-        IconButton(
-                 icon: Icon(Icons.shopping_cart),
-                 tooltip: 'Open shopping cart',
-                onPressed: () {
-                  _bloc.fetchAllMovies();
-                },
-               ),
-        ],
+        bottom: _buildSearchWidget(context),
       ),
       body: StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> data) {
           if (data.hasData) {
             return ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  print("is index  $index  : ${index == data.data.length && _bloc.hasMoreData}");
-                  if(index == data.data.length && _bloc.hasMoreData)
-                    {
-                      _bloc.fetchAllMovies();
-                    }
-                  return index < data.data.length
-                      ? MovieWidget(item: data.data[index],)
-                      : Center(child:CircularProgressIndicator());
-                },
-                itemCount: data.data.length + (_bloc.hasMoreData ? 1 : 0),
-                controller: _scrollController);
+              itemBuilder: (BuildContext context, int index) {
+                print(
+                    "is index  $index  : ${index == data.data.length && _bloc.hasMoreData}");
+                if (index == data.data.length && _bloc.hasMoreData) {
+                  _bloc.fetchAllMovies();
+                }
+                return index < data.data.length
+                    ? MovieWidget(
+                        item: data.data[index],
+                      )
+                    : Center(child: CircularProgressIndicator());
+              },
+              itemCount: data.data.length + (_bloc.hasMoreData ? 1 : 0),
+            );
           }
           if (data.hasError) {
             return Text("test");
@@ -63,11 +54,110 @@ class _MovieListPageState extends State<MovieListPage> {
     );
   }
 
-  void _onScroll() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
-      //
-    }
+  _buildSearchWidget(BuildContext context) {
+    return PreferredSize(
+      child: Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        child: TypeAheadFormField(
+          key: _searchKey,
+          textFieldConfiguration: TextFieldConfiguration(
+            autofocus: true,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.0),
+                ),
+              ),
+              suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
+
+              })
+            ),
+          ),
+          suggestionsCallback: (pattern) async {
+            return await _bloc.search(pattern);
+          },
+          itemBuilder: (context, suggestion) {
+            final movie = suggestion as Movie;
+
+            return Card(
+              child: Row(
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8.0),
+                      topLeft: Radius.circular(8.0),
+                    ),
+                    child: Container(
+                      width: 96,
+                      height: 96,
+                      child: movie.images != null
+                          ? CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: movie.images[0],
+                              placeholder: Container(
+                                  width: double.infinity,
+                                  child: Center(
+                                      child: CircularProgressIndicator())),
+                              errorWidget: Container(
+                                  width: double.infinity,
+                                  child: Center(child: Icon(Icons.error))),
+                            )
+                          : Container(
+                              child: Placeholder(),
+                            ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 16.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      movie.title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                  ),
+                ],
+              ),
+            );
+            return Card(
+              child: ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
+                  ),
+                  child: Container(
+                    width: 96,
+                    height: 96,
+                    child: movie.images != null
+                        ? CachedNetworkImage(
+                            imageUrl: movie.images[0],
+                            placeholder: Container(
+                                width: double.infinity,
+                                child:
+                                    Center(child: CircularProgressIndicator())),
+                            errorWidget: Container(
+                                width: double.infinity,
+                                child: Center(child: Icon(Icons.error))),
+                          )
+                        : Container(
+                            child: Placeholder(),
+                          ),
+                  ),
+                ),
+                title: Text(movie.title),
+              ),
+            );
+          },
+          onSuggestionSelected: (suggestion) {
+            //todo: show detail page
+            /* Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ProductPage(product: suggestion)));*/
+          },
+        ),
+      ),
+      preferredSize: Size(double.infinity, 56),
+    );
   }
 }

@@ -7,4 +7,6 @@ class MovieRepository {
   MovieRepository(this.movieApi);
 
   Future<MovieListResponse> getMovieList(int page) =>  movieApi.getMovieList(page);
+
+  Future<MovieListResponse> search(String pattern) => movieApi.search(pattern);
 }

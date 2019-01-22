@@ -33,4 +33,8 @@ class MovieListBloc {
   dispose() {
     _moviesSubject.close();
   }
+
+  Future<List<Movie>> search(String pattern) => repository.search(pattern).then((item){
+    return Future.value(item.data);
+  });
 }

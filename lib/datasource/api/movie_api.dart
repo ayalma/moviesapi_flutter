@@ -10,4 +10,9 @@ class MovieApi{
       var res = await http.get(AppCons.baseUrl+"v1/movies?page=$page");
       return MovieListResponse.fromJson(json.decode(res.body));
   }
+
+  Future<MovieListResponse> search(String pattern) async{
+    var res = await http.get(AppCons.baseUrl+"v1/movies?q=$pattern&page=1");
+    return MovieListResponse.fromJson(json.decode(res.body));
+  }
 }
