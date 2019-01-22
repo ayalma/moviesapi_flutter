@@ -17,7 +17,9 @@ class MovieListBloc {
   Observable<List<Movie>> get movies => _moviesSubject.stream;
 
   fetchAllMovies() async {
-    var movieList = await repository.getMovieList(page);
+    var movieList = await repository.getMovieList(page).catchError((error){
+      _moviesSubject.addError(error);
+    });
     var currentpage = int.tryParse(movieList.metaData.currentPage);
 
     hasMoreData = currentpage < movieList.metaData.pageCount;

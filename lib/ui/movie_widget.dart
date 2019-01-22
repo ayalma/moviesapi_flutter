@@ -24,8 +24,8 @@ class MovieWidget extends StatelessWidget {
               child: item.images != null
                   ? CachedNetworkImage(
                       imageUrl: item.images[0],
-                      placeholder: new CircularProgressIndicator(),
-                      errorWidget: new Icon(Icons.error),
+                      placeholder:  Container(width: double.infinity,child: Center(child: CircularProgressIndicator())),
+                      errorWidget:  Container(width:double.infinity,child: Center(child: Icon(Icons.error))),
                     )
                   : Container(
                       child: Placeholder(),
