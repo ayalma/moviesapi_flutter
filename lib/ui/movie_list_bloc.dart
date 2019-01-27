@@ -30,11 +30,23 @@ class MovieListBloc {
     _moviesSubject.sink.add(_movieList);
   }
 
-  dispose() {
-    _moviesSubject.close();
-  }
-
   Future<List<Movie>> search(String pattern) => repository.search(pattern).then((item){
     return Future.value(item.data);
   });
+
+
+  final _movieSubject = BehaviorSubject<Movie>();
+  Observable<Movie> get movie => _movieSubject.stream;
+
+  fetchMovie(int id) async {
+    var movie = await repository.getMovie(id).catchError((error){
+      _moviesSubject.addError(error);
+    });
+    _movieSubject.sink.add(movie);
+  }
+
+  dispose() {
+    _movieSubject.close();
+    _moviesSubject.close();
+  }
 }

@@ -14,6 +14,7 @@ class MovieListPage extends StatefulWidget {
 }
 
 class _MovieListPageState extends State<MovieListPage> {
+
   final MovieListBloc _bloc = MovieListBloc(MovieRepository(MovieApi()));
   final _searchKey = Key("search");
 
@@ -22,7 +23,7 @@ class _MovieListPageState extends State<MovieListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Movie api"),
-        bottom: _buildSearchWidget(context),
+       // bottom: _buildSearchWidget(context),
       ),
       body: StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> data) {
@@ -37,6 +38,7 @@ class _MovieListPageState extends State<MovieListPage> {
                 return index < data.data.length
                     ? MovieWidget(
                         item: data.data[index],
+                        bloc: _bloc,
                       )
                     : Center(child: CircularProgressIndicator());
               },
@@ -69,9 +71,9 @@ class _MovieListPageState extends State<MovieListPage> {
                   Radius.circular(8.0),
                 ),
               ),
-              suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
+              /* suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
 
-              })
+              })*/
             ),
           ),
           suggestionsCallback: (pattern) async {
