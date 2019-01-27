@@ -5,6 +5,7 @@ import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
+import 'package:moviesapi_flutter/ui/movie_page.dart';
 import 'package:moviesapi_flutter/ui/movie_widget.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -23,7 +24,7 @@ class _MovieListPageState extends State<MovieListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Movie api"),
-       // bottom: _buildSearchWidget(context),
+        bottom: _buildSearchWidget(context),
       ),
       body: StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> data) {
@@ -153,9 +154,10 @@ class _MovieListPageState extends State<MovieListPage> {
             );
           },
           onSuggestionSelected: (suggestion) {
+            final movie = suggestion as Movie;
             //todo: show detail page
-            /* Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProductPage(product: suggestion)));*/
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => MoviePage(bloc: _bloc,id: movie.id,),));
           },
         ),
       ),
