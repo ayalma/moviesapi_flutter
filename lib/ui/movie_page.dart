@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
+import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 
 class MoviePage extends StatefulWidget {
-  final MovieListBloc bloc;
+  final MovieListBloc _bloc = getIt.get();
   final int id;
 
-  const MoviePage({Key key, this.bloc, this.id}) : super(key: key);
+   MoviePage({Key key, this.id}) : super(key: key);
 
   @override
   _MoviePageState createState() => _MoviePageState();
@@ -27,7 +28,7 @@ class _MoviePageState extends State<MoviePage> {
   @override
   void initState() {
     // TODO: implement initState
-    widget.bloc.fetchMovie(widget.id);
+    widget._bloc.fetchMovie(widget.id);
   }
 
   @override
@@ -54,7 +55,7 @@ class _MoviePageState extends State<MoviePage> {
               body: Builder(builder: (context) {
                 return RefreshIndicator(
                   onRefresh: (){
-                    return widget.bloc.fetchMovie(widget.id);
+                    return widget._bloc.fetchMovie(widget.id);
                     return Future.value(true);
                   },
                   child: CustomScrollView(
@@ -152,7 +153,7 @@ class _MoviePageState extends State<MoviePage> {
         } else
           return Text(item.error.toString());
       },
-      stream: widget.bloc.movie,
+      stream: widget._bloc.movie,
     );
   }
 

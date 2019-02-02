@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
 
 class MovieWidget extends StatelessWidget {
   final Movie item;
-  final MovieListBloc bloc;
+  final MovieListBloc _bloc = getIt.get();
 
-  const MovieWidget({Key key, this.item, this.bloc}) : super(key: key);
+   MovieWidget({Key key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MovieWidget extends StatelessWidget {
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MoviePage(bloc: bloc,id: item.id,)),
+          MaterialPageRoute(builder: (context) => MoviePage(id: item.id,)),
         );
       },
       child: Padding(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
+import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
@@ -15,8 +16,7 @@ class MovieListPage extends StatefulWidget {
 }
 
 class _MovieListPageState extends State<MovieListPage> {
-
-  final MovieListBloc _bloc = MovieListBloc(MovieRepository(MovieApi()));
+  final MovieListBloc _bloc = getIt.get();
   final _searchKey = Key("search");
 
   @override
@@ -39,7 +39,6 @@ class _MovieListPageState extends State<MovieListPage> {
                 return index < data.data.length
                     ? MovieWidget(
                         item: data.data[index],
-                        bloc: _bloc,
                       )
                     : Center(child: CircularProgressIndicator());
               },
@@ -157,7 +156,10 @@ class _MovieListPageState extends State<MovieListPage> {
             final movie = suggestion as Movie;
             //todo: show detail page
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MoviePage(bloc: _bloc,id: movie.id,),));
+              builder: (context) => MoviePage(
+                    id: movie.id,
+                  ),
+            ));
           },
         ),
       ),

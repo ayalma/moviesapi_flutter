@@ -1,29 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
+import 'package:moviesapi_flutter/repository/movieRepository.dart';
+import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_list_page.dart';
+import 'package:get_it/get_it.dart';
 
-void main() => runApp(MyApp());
+// This is our global ServiceLocator
+GetIt getIt = new GetIt();
+
+void main() {
+  getIt.registerLazySingleton<MovieApi>(
+    () => MovieApi(),
+  );
+
+  getIt.registerLazySingleton<MovieRepository>(
+    () => MovieRepository(getIt.get()),
+  );
+
+  getIt.registerLazySingleton(
+    () => MovieListBloc(getIt.get()),
+  );
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: MovieListPage()
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+        ),
+        home: MovieListPage());
   }
 }
 
