@@ -1,5 +1,6 @@
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
+import 'package:moviesapi_flutter/datasource/model/new_movie_request.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -48,5 +49,10 @@ class MovieListBloc {
   dispose() {
     _movieSubject.close();
     _moviesSubject.close();
+  }
+
+  Future<NewMovieRequest> saveMove(NewMovieRequest request) async {
+    print(request.toJson().toString());
+    return repository.saveMovie(request);
   }
 }

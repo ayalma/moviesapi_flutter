@@ -113,7 +113,7 @@ class _MoviePageState extends State<MoviePage> {
                               ],
                             ),
                             Divider(),
-                            Container(
+                            (movie.genres != null)? Container(
                               height: 50,
                               child: ListView.builder(
                                 itemBuilder: (context, index) {
@@ -129,16 +129,16 @@ class _MoviePageState extends State<MoviePage> {
                                 itemCount: movie.genres.length,
                                 scrollDirection: Axis.horizontal,
                               ),
-                            ),
+                            ):Container(),
                             Text(
-                              movie.writer,
+                              movie.writer??"",
                               style: Theme.of(context).textTheme.body2,
                             ),
                             SizedBox(
                               height: 16.0,
                             ),
                             Text(
-                              movie.actors,
+                              movie.actors??"",
                               style: Theme.of(context).textTheme.body2,
                             ),
                           ]),
@@ -241,43 +241,43 @@ class _MoviePageState extends State<MoviePage> {
 
   FlexibleSpaceBar buildFlexibleSpaceBar(Movie movie) {
     return FlexibleSpaceBar(
-        background: Stack(
-      children: [
-        PageView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          controller: _controller,
-          itemBuilder: (context, index) {
-            return Image.network(
-              movie.images[index],
-              fit: BoxFit.fill,
-            );
-          },
-          itemCount: movie.images.length,
-        ),
-        Positioned(
-          bottom: 0.0,
-          left: 0.0,
-          right: 0.0,
-          child: new Container(
-            color: Colors.grey[800].withOpacity(0.5),
-            padding: const EdgeInsets.all(20.0),
-            child: new Center(
-              child: new DotsIndicator(
-                controller: _controller,
-                itemCount: movie.images.length,
-                onPageSelected: (int page) {
-                  _controller.animateToPage(
-                    page,
-                    duration: _kDuration,
-                    curve: _kCurve,
-                  );
-                },
-              ),
+        background: (movie.images != null)?Stack(
+          children: [
+            PageView.builder(
+              physics: AlwaysScrollableScrollPhysics(),
+              controller: _controller,
+              itemBuilder: (context, index) {
+                return Image.network(
+                  movie.images[index],
+                  fit: BoxFit.fill,
+                );
+              },
+              itemCount: movie.images.length,
             ),
-          ),
-        )
-      ],
-    ));
+            Positioned(
+              bottom: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: new Container(
+                color: Colors.grey[800].withOpacity(0.5),
+                padding: const EdgeInsets.all(20.0),
+                child: new Center(
+                  child: new DotsIndicator(
+                    controller: _controller,
+                    itemCount: movie.images.length,
+                    onPageSelected: (int page) {
+                      _controller.animateToPage(
+                        page,
+                        duration: _kDuration,
+                        curve: _kCurve,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
+        ):Container());
   }
 }
 
