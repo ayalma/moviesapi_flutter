@@ -40,7 +40,7 @@ class MovieListBloc {
 
   fetchMovie(int id) async {
     var movie = await repository.getMovie(id).catchError((error){
-      _moviesSubject.addError(error);
+      _movieSubject.addError(error);
     });
     _movieSubject.sink.add(movie);
   }

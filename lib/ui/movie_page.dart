@@ -37,7 +37,127 @@ class _MoviePageState extends State<MoviePage> {
         if (item.hasData) {
           final movie = item.data;
           return Scaffold(
-            body: CustomScrollView(
+            body: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxScrolled) {
+                return <Widget>[
+                  SliverOverlapAbsorber(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                    child: SliverAppBar(
+                      title: Text(movie.title),
+                      flexibleSpace: buildFlexibleSpaceBar(movie),
+                      expandedHeight: 270,
+                    ),
+                  ),
+                ];
+              },
+              body: Builder(builder: (context) {
+                return RefreshIndicator(
+                  onRefresh: (){
+                    return widget.bloc.fetchMovie(widget.id);
+                    return Future.value(true);
+                  },
+                  child: CustomScrollView(
+                    // The "controller" and "primary" members should be left
+                    // unset, so that the NestedScrollView can control this
+                    // inner scroll view.
+                    // If the "controller" property is set, then this scroll
+                    // view will not be associated with the NestedScrollView.
+                    // The PageStorageKey should be unique to this ScrollView;
+                    // it allows the list to remember its scroll position when
+                    // the tab view is not on the screen.
+                    key: PageStorageKey<String>("test"),
+                    slivers: <Widget>[
+                      SliverOverlapInjector(
+                        // This is the flip side of the SliverOverlapAbsorber above.
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(8.0),
+                        sliver: SliverList(
+                          delegate: SliverChildListDelegate(<Widget>[
+                            Row(
+                              children: <Widget>[
+                                ClipRRect(
+                                  child: Container(
+                                    width: 48,
+                                    height: 48,
+                                    child: Image.network(
+                                      movie.poster,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0)),
+                                ),
+                                SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(movie.title,
+                                          style: Theme.of(context).textTheme.title),
+                                      SizedBox(
+                                        height: 8.0,
+                                      ),
+                                      Text(movie.year,
+                                          style:
+                                          Theme.of(context).textTheme.subtitle),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Divider(),
+                            Container(
+                              height: 50,
+                              child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Chip(
+                                      label: Text(
+                                        movie.genres[index].toLowerCase(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                itemCount: movie.genres.length,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                            ),
+                            Text(
+                              movie.writer,
+                              style: Theme.of(context).textTheme.body2,
+                            ),
+                            SizedBox(
+                              height: 16.0,
+                            ),
+                            Text(
+                              movie.actors,
+                              style: Theme.of(context).textTheme.body2,
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          );
+        } else
+          return Text(item.error.toString());
+      },
+      stream: widget.bloc.movie,
+    );
+  }
+
+  /*
+  CustomScrollView(
               slivers: <Widget>[
                 SliverAppBar(
                   title: Text(movie.title),
@@ -116,13 +236,7 @@ class _MoviePageState extends State<MoviePage> {
                 ),
               ],
             ),
-          );
-        } else
-          return Text(item.error.toString());
-      },
-      stream: widget.bloc.movie,
-    );
-  }
+  * */
 
   FlexibleSpaceBar buildFlexibleSpaceBar(Movie movie) {
     return FlexibleSpaceBar(
