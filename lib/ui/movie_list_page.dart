@@ -9,6 +9,7 @@ import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
 import 'package:moviesapi_flutter/ui/movie_widget.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:moviesapi_flutter/ui/new_movie.dart';
 
 class MovieListPage extends StatefulWidget {
   @override
@@ -52,6 +53,16 @@ class _MovieListPageState extends State<MovieListPage> {
           return Container();
         },
         stream: _bloc.movies,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewMoviePage()),
+          );
+        },
+        icon: Icon(Icons.movie_creation),
+        label: Text("New Movie"),
       ),
     );
   }
