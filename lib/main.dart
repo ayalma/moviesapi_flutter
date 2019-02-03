@@ -42,7 +42,14 @@ class MyApp extends StatelessWidget {
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
           primarySwatch: Colors.blue,
+          buttonTheme: ButtonThemeData(
+            splashColor: Colors.blue,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+          ),
         ),
+        showSemanticsDebugger: false,
         home: MovieListPage());
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
@@ -31,6 +33,7 @@ class _MovieListPageState extends State<MovieListPage> {
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> data) {
           if (data.hasData) {
             return ListView.builder(
+
               itemBuilder: (BuildContext context, int index) {
                 print(
                     "is index  $index  : ${index == data.data.length && _bloc.hasMoreData}");
@@ -47,10 +50,41 @@ class _MovieListPageState extends State<MovieListPage> {
             );
           }
           if (data.hasError) {
-            return Text("test");
+            if (data.error is SocketException) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.signal_wifi_off,
+                      size: 96,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Text(
+                      "No internet connection",
+                      style: Theme.of(context).textTheme.subhead,
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    OutlineButton.icon(
+                      onPressed: () {
+                        _bloc.fetchAllMovies();
+                      },
+                      icon: Icon(Icons.refresh),
+                      label: Text("retry"),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Text(data.error.toString());
           }
 
-          return Container();
+          return Center(child: CircularProgressIndicator());
         },
         stream: _bloc.movies,
       ),
