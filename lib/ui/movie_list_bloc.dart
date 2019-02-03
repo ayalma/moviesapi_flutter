@@ -1,6 +1,7 @@
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/datasource/model/new_movie_request.dart';
+import 'package:moviesapi_flutter/datasource/movie_data_source.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -8,10 +9,14 @@ class MovieListBloc {
   int page = 1;
   bool hasMoreData = false;
   final MovieRepository repository;
-
+  MovieDataSource datasource ;
   MovieListBloc(this.repository){
-    fetchAllMovies();
+    datasource = MovieDataSource(this.repository);
+
   }
+
+
+
 
   var _movieList = List<Movie>();
   final _moviesSubject = BehaviorSubject<List<Movie>>();

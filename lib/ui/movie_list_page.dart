@@ -23,6 +23,11 @@ class _MovieListPageState extends State<MovieListPage> {
   final _searchKey = Key("search");
 
   @override
+  void initState() {
+    // TODO: implement initState
+    _bloc.datasource.loadInitial();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -36,17 +41,57 @@ class _MovieListPageState extends State<MovieListPage> {
 
               itemBuilder: (BuildContext context, int index) {
                 print(
-                    "is index  $index  : ${index == data.data.length && _bloc.hasMoreData}");
-                if (index == data.data.length && _bloc.hasMoreData) {
-                  _bloc.fetchAllMovies();
+                    "is index  $index  : ${index == data.data.length && _bloc.datasource.hasMoreData}");
+                if (index == data.data.length && _bloc.datasource.hasMoreData) {
+                  _bloc.datasource.loadAfter();
                 }
                 return index < data.data.length
                     ? MovieWidget(
                         item: data.data[index],
                       )
-                    : Center(child: CircularProgressIndicator());
+                    : Center(child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: StreamBuilder(builder: (context,AsyncSnapshot<bool> item){
+                        if(item.hasError)
+                          {
+                            return Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.signal_wifi_off,
+                                    size: 96,
+                                    color: Theme.of(context).accentColor,
+                                  ),
+                                  SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  Text(
+                                    "No internet connection",
+                                    style: Theme.of(context).textTheme.subhead,
+                                  ),
+                                  SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  OutlineButton.icon(
+                                    onPressed: () {
+                                      _bloc.datasource.loadAfter();
+                                    },
+                                    icon: Icon(Icons.refresh),
+                                    label: Text("retry"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                          else
+                            {
+                              return CircularProgressIndicator();
+                            }
+                      },stream: _bloc.datasource.networkState,),
+                    ));
               },
-              itemCount: data.data.length + (_bloc.hasMoreData ? 1 : 0),
+              itemCount: data.data.length + (_bloc.datasource.hasMoreData ? 1 : 0),
             );
           }
           if (data.hasError) {
@@ -72,7 +117,7 @@ class _MovieListPageState extends State<MovieListPage> {
                     ),
                     OutlineButton.icon(
                       onPressed: () {
-                        _bloc.fetchAllMovies();
+                        _bloc.datasource.loadInitial();
                       },
                       icon: Icon(Icons.refresh),
                       label: Text("retry"),
@@ -86,7 +131,7 @@ class _MovieListPageState extends State<MovieListPage> {
 
           return Center(child: CircularProgressIndicator());
         },
-        stream: _bloc.movies,
+        stream: _bloc.datasource.movies,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
