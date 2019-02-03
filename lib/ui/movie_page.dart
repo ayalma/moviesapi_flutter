@@ -11,7 +11,7 @@ class MoviePage extends StatefulWidget {
   final MovieListBloc _bloc = getIt.get();
   final int id;
 
-   MoviePage({Key key, this.id}) : super(key: key);
+  MoviePage({Key key, this.id}) : super(key: key);
 
   @override
   _MoviePageState createState() => _MoviePageState();
@@ -33,12 +33,12 @@ class _MoviePageState extends State<MoviePage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      builder: (context, AsyncSnapshot<Movie> item) {
-        if (item.hasData) {
-          final movie = item.data;
-          return Scaffold(
-            body: NestedScrollView(
+    return Scaffold(
+      body: StreamBuilder(
+        builder: (context, AsyncSnapshot<Movie> item) {
+          if (item.hasData) {
+            final movie = item.data;
+            return NestedScrollView(
               headerSliverBuilder: (context, innerBoxScrolled) {
                 return <Widget>[
                   SliverOverlapAbsorber(
@@ -54,7 +54,7 @@ class _MoviePageState extends State<MoviePage> {
               },
               body: Builder(builder: (context) {
                 return RefreshIndicator(
-                  onRefresh: (){
+                  onRefresh: () {
                     return widget._bloc.fetchMovie(widget.id);
                     return Future.value(true);
                   },
@@ -90,55 +90,62 @@ class _MoviePageState extends State<MoviePage> {
                                     ),
                                   ),
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(24.0)),
+                                      BorderRadius.all(Radius.circular(24.0)),
                                 ),
                                 SizedBox(
                                   width: 16.0,
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(movie.title,
-                                          style: Theme.of(context).textTheme.title),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .title),
                                       SizedBox(
                                         height: 8.0,
                                       ),
                                       Text(movie.year,
-                                          style:
-                                          Theme.of(context).textTheme.subtitle),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle),
                                     ],
                                   ),
                                 ),
                               ],
                             ),
                             Divider(),
-                            (movie.genres != null)? Container(
-                              height: 50,
-                              child: ListView.builder(
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Chip(
-                                      label: Text(
-                                        movie.genres[index].toLowerCase(),
-                                      ),
+                            (movie.genres != null)
+                                ? Container(
+                                    height: 50,
+                                    child: ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 8.0),
+                                          child: Chip(
+                                            label: Text(
+                                              movie.genres[index].toLowerCase(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: movie.genres.length,
+                                      scrollDirection: Axis.horizontal,
                                     ),
-                                  );
-                                },
-                                itemCount: movie.genres.length,
-                                scrollDirection: Axis.horizontal,
-                              ),
-                            ):Container(),
+                                  )
+                                : Container(),
                             Text(
-                              movie.writer??"",
+                              movie.writer ?? "",
                               style: Theme.of(context).textTheme.body2,
                             ),
                             SizedBox(
                               height: 16.0,
                             ),
                             Text(
-                              movie.actors??"",
+                              movie.actors ?? "",
                               style: Theme.of(context).textTheme.body2,
                             ),
                           ]),
@@ -148,12 +155,16 @@ class _MoviePageState extends State<MoviePage> {
                   ),
                 );
               }),
-            ),
+            );
+          } else if (item.hasError) {
+            return Center(child: Text(item.error.toString()));
+          }
+          return Center(
+            child: CircularProgressIndicator(),
           );
-        } else
-          return Text(item.error.toString());
-      },
-      stream: widget._bloc.movie,
+        },
+        stream: widget._bloc.movie,
+      ),
     );
   }
 
@@ -241,43 +252,45 @@ class _MoviePageState extends State<MoviePage> {
 
   FlexibleSpaceBar buildFlexibleSpaceBar(Movie movie) {
     return FlexibleSpaceBar(
-        background: (movie.images != null)?Stack(
-          children: [
-            PageView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
-              controller: _controller,
-              itemBuilder: (context, index) {
-                return Image.network(
-                  movie.images[index],
-                  fit: BoxFit.fill,
-                );
-              },
-              itemCount: movie.images.length,
-            ),
-            Positioned(
-              bottom: 0.0,
-              left: 0.0,
-              right: 0.0,
-              child: new Container(
-                color: Colors.grey[800].withOpacity(0.5),
-                padding: const EdgeInsets.all(20.0),
-                child: new Center(
-                  child: new DotsIndicator(
+        background: (movie.images != null)
+            ? Stack(
+                children: [
+                  PageView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
                     controller: _controller,
-                    itemCount: movie.images.length,
-                    onPageSelected: (int page) {
-                      _controller.animateToPage(
-                        page,
-                        duration: _kDuration,
-                        curve: _kCurve,
+                    itemBuilder: (context, index) {
+                      return Image.network(
+                        movie.images[index],
+                        fit: BoxFit.fill,
                       );
                     },
+                    itemCount: movie.images.length,
                   ),
-                ),
-              ),
-            )
-          ],
-        ):Container());
+                  Positioned(
+                    bottom: 0.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: new Container(
+                      color: Colors.grey[800].withOpacity(0.5),
+                      padding: const EdgeInsets.all(20.0),
+                      child: new Center(
+                        child: new DotsIndicator(
+                          controller: _controller,
+                          itemCount: movie.images.length,
+                          onPageSelected: (int page) {
+                            _controller.animateToPage(
+                              page,
+                              duration: _kDuration,
+                              curve: _kCurve,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : Container());
   }
 }
 

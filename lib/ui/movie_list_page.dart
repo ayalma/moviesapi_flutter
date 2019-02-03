@@ -177,4 +177,10 @@ class _MovieListPageState extends State<MovieListPage> {
       preferredSize: Size(double.infinity, 56),
     );
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

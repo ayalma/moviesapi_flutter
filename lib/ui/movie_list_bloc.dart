@@ -40,6 +40,7 @@ class MovieListBloc {
   Observable<Movie> get movie => _movieSubject.stream;
 
   fetchMovie(int id) async {
+    _movieSubject.add(null);
     var movie = await repository.getMovie(id).catchError((error){
       _movieSubject.addError(error);
     });
