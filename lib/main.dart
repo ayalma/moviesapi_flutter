@@ -49,13 +49,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: "Iran",
           brightness: Brightness.light,
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.indigo,
+          accentColor: Colors.pinkAccent,
           buttonTheme: ButtonThemeData(
             splashColor: Colors.green,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
           ),
+
         ),
         showSemanticsDebugger: false,
         home: MovieListPage());

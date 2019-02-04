@@ -12,7 +12,6 @@ class MovieListBloc {
   MovieDataSource datasource ;
   MovieListBloc(this.repository){
     datasource = MovieDataSource(this.repository);
-
   }
 
 
