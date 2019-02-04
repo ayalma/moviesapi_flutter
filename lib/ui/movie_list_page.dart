@@ -1,6 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:moviesapi_flutter/config/localizations.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/ui/loading_view.dart';
@@ -29,7 +30,7 @@ class _MovieListPageState extends State<MovieListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Movie api"),
+        title: Text(AppLocalizations.of(context).movieApi),
         bottom: _buildSearchWidget(context),
       ),
       body: StreamBuilder(
@@ -91,7 +92,7 @@ class _MovieListPageState extends State<MovieListPage> {
           );
         },
         icon: Icon(Icons.movie_creation),
-        label: Text("New Movie"),
+        label: Text(AppLocalizations.of(context).newMovie),
       ),
     );
   }
