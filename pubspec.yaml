@@ -26,6 +26,7 @@ dependencies:
   flutter_typeahead: ^0.5.2
   get_it: ^1.0.2
   image_picker:
+  #flutter_statusbarcolor: any
 
 dev_dependencies:
   flutter_test:

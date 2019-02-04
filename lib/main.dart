@@ -31,6 +31,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+ /*   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+        //or set color with: Color(0xFF0000FF)
+        systemNavigationBarColor: Colors.green
+    ));*/
     return MaterialApp(
         locale: Locale('fa'),
         localizationsDelegates: [
@@ -45,9 +49,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: "Iran",
           brightness: Brightness.light,
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
           buttonTheme: ButtonThemeData(
-            splashColor: Colors.blue,
+            splashColor: Colors.green,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
