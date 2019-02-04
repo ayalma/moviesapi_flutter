@@ -7,6 +7,7 @@ import 'package:moviesapi_flutter/datasource/model/movie.dart';
 import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
+import 'package:moviesapi_flutter/ui/loading_view.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
 import 'package:moviesapi_flutter/ui/movie_widget.dart';
@@ -27,6 +28,7 @@ class _MovieListPageState extends State<MovieListPage> {
     // TODO: implement initState
     _bloc.datasource.loadInitial();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +40,6 @@ class _MovieListPageState extends State<MovieListPage> {
         builder: (BuildContext context, AsyncSnapshot<List<Movie>> data) {
           if (data.hasData) {
             return ListView.builder(
-
               itemBuilder: (BuildContext context, int index) {
                 print(
                     "is index  $index  : ${index == data.data.length && _bloc.datasource.hasMoreData}");
@@ -47,86 +48,39 @@ class _MovieListPageState extends State<MovieListPage> {
                 }
                 return index < data.data.length
                     ? MovieWidget(
-                        item: data.data[index],
-                      )
-                    : Center(child: Padding(
+                  item: data.data[index],
+                )
+                    : Center(
+                    child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: StreamBuilder(builder: (context,AsyncSnapshot<bool> item){
-                        if(item.hasError)
-                          {
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.signal_wifi_off,
-                                    size: 96,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Text(
-                                    "No internet connection",
-                                    style: Theme.of(context).textTheme.subhead,
-                                  ),
-                                  SizedBox(
-                                    height: 16.0,
-                                  ),
-                                  OutlineButton.icon(
-                                    onPressed: () {
-                                      _bloc.datasource.loadAfter();
-                                    },
-                                    icon: Icon(Icons.refresh),
-                                    label: Text("retry"),
-                                  ),
-                                ],
-                              ),
+                      child: StreamBuilder(
+                        builder: (context, AsyncSnapshot<Object> item) {
+                          if (item.hasData) {
+                            return LoadingView(
+                              onPressed: () {
+                                _bloc.datasource.loadAfter();
+                              },
+                              error: item.data,
                             );
+                          } else {
+                            return CircularProgressIndicator();
                           }
-                          else
-                            {
-                              return CircularProgressIndicator();
-                            }
-                      },stream: _bloc.datasource.networkState,),
+                        },
+                        stream: _bloc.datasource.networkState,
+                      ),
                     ));
               },
-              itemCount: data.data.length + (_bloc.datasource.hasMoreData ? 1 : 0),
+              itemCount:
+              data.data.length + (_bloc.datasource.hasMoreData ? 1 : 0),
             );
           }
           if (data.hasError) {
-            if (data.error is SocketException) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.signal_wifi_off,
-                      size: 96,
-                      color: Theme.of(context).accentColor,
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                      "No internet connection",
-                      style: Theme.of(context).textTheme.subhead,
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    OutlineButton.icon(
-                      onPressed: () {
-                        _bloc.datasource.loadInitial();
-                      },
-                      icon: Icon(Icons.refresh),
-                      label: Text("retry"),
-                    ),
-                  ],
-                ),
-              );
-            }
-            return Text(data.error.toString());
+            return LoadingView(
+              onPressed: () {
+                _bloc.datasource.loadInitial();
+              },
+              error: data.error,
+            );
           }
 
           return Center(child: CircularProgressIndicator());
@@ -150,17 +104,18 @@ class _MovieListPageState extends State<MovieListPage> {
     return PreferredSize(
       child: Card(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            borderRadius: BorderRadius.all(Radius.circular(32.0))),
         child: TypeAheadFormField(
           key: _searchKey,
           textFieldConfiguration: TextFieldConfiguration(
             autofocus: true,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.0),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(32.0),
+                  ),
                 ),
-              ),
+                enabled: false
               /* suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
 
               })*/
@@ -185,19 +140,19 @@ class _MovieListPageState extends State<MovieListPage> {
                       height: 96,
                       child: movie.images != null
                           ? CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: movie.images[0],
-                              placeholder: Container(
-                                  width: double.infinity,
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                              errorWidget: Container(
-                                  width: double.infinity,
-                                  child: Center(child: Icon(Icons.error))),
-                            )
+                        fit: BoxFit.cover,
+                        imageUrl: movie.images[0],
+                        placeholder: Container(
+                            width: double.infinity,
+                            child: Center(
+                                child: CircularProgressIndicator())),
+                        errorWidget: Container(
+                            width: double.infinity,
+                            child: Center(child: Icon(Icons.error))),
+                      )
                           : Container(
-                              child: Placeholder(),
-                            ),
+                        child: Placeholder(),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -212,43 +167,14 @@ class _MovieListPageState extends State<MovieListPage> {
                 ],
               ),
             );
-            return Card(
-              child: ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(8.0),
-                    topRight: Radius.circular(8.0),
-                  ),
-                  child: Container(
-                    width: 96,
-                    height: 96,
-                    child: movie.images != null
-                        ? CachedNetworkImage(
-                            imageUrl: movie.images[0],
-                            placeholder: Container(
-                                width: double.infinity,
-                                child:
-                                    Center(child: CircularProgressIndicator())),
-                            errorWidget: Container(
-                                width: double.infinity,
-                                child: Center(child: Icon(Icons.error))),
-                          )
-                        : Container(
-                            child: Placeholder(),
-                          ),
-                  ),
-                ),
-                title: Text(movie.title),
-              ),
-            );
           },
           onSuggestionSelected: (suggestion) {
             final movie = suggestion as Movie;
             //todo: show detail page
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => MoviePage(
-                    id: movie.id,
-                  ),
+                id: movie.id,
+              ),
             ));
           },
         ),
