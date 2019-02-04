@@ -1,12 +1,8 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
-import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/main.dart';
-import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/loading_view.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
@@ -48,30 +44,30 @@ class _MovieListPageState extends State<MovieListPage> {
                 }
                 return index < data.data.length
                     ? MovieWidget(
-                        item: data.data[index],
-                      )
+                  item: data.data[index],
+                )
                     : Center(
-                        child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: StreamBuilder(
-                          builder: (context, AsyncSnapshot<Object> item) {
-                            if (item.hasData) {
-                              return LoadingView(
-                                onPressed: () {
-                                  _bloc.datasource.loadAfter();
-                                },
-                                error: item.data,
-                              );
-                            } else {
-                              return CircularProgressIndicator();
-                            }
-                          },
-                          stream: _bloc.datasource.networkState,
-                        ),
-                      ));
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: StreamBuilder(
+                        builder: (context, AsyncSnapshot<Object> item) {
+                          if (item.hasData) {
+                            return LoadingView(
+                              onPressed: () {
+                                _bloc.datasource.loadAfter();
+                              },
+                              error: item.data,
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
+                        stream: _bloc.datasource.networkState,
+                      ),
+                    ));
               },
               itemCount:
-                  data.data.length + (_bloc.datasource.hasMoreData ? 1 : 0),
+              data.data.length + (_bloc.datasource.hasMoreData ? 1 : 0),
             );
           }
           if (data.hasError) {
@@ -116,10 +112,10 @@ class _MovieListPageState extends State<MovieListPage> {
                   ),
                 ),
                 enabled: false
-                /* suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
+              /* suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
 
               })*/
-                ),
+            ),
           ),
           suggestionsCallback: (pattern) async {
             return await _bloc.search(pattern);
@@ -140,19 +136,19 @@ class _MovieListPageState extends State<MovieListPage> {
                       height: 96,
                       child: movie.images != null
                           ? CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              imageUrl: movie.images[0],
-                              placeholder: Container(
-                                  width: double.infinity,
-                                  child: Center(
-                                      child: CircularProgressIndicator())),
-                              errorWidget: Container(
-                                  width: double.infinity,
-                                  child: Center(child: Icon(Icons.error))),
-                            )
+                        fit: BoxFit.cover,
+                        imageUrl: movie.images[0],
+                        placeholder: Container(
+                            width: double.infinity,
+                            child: Center(
+                                child: CircularProgressIndicator())),
+                        errorWidget: Container(
+                            width: double.infinity,
+                            child: Center(child: Icon(Icons.error))),
+                      )
                           : Container(
-                              child: Placeholder(),
-                            ),
+                        child: Placeholder(),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -173,8 +169,8 @@ class _MovieListPageState extends State<MovieListPage> {
             //todo: show detail page
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => MoviePage(
-                    id: movie.id,
-                  ),
+                id: movie.id,
+              ),
             ));
           },
         ),
