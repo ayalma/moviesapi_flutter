@@ -20,5 +20,135 @@
   "@movieApi": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+  "searchLabel": "نام فیلم را وارد کنید",
+  "@searchLabel": {
+      "type": "text",
+      "placeholders": {}
+  },
+  "noInternet": "خطا! اینترنت در دسترس نیست.",
+  "@noInternet": {
+      "type": "text",
+      "placeholders": {}
+  },
+   "retry": "تلاش مجدد",
+   "@retry": {
+     "type": "text",
+     "placeholders": {}
+   },
+   "movieName": "نام فیلم",
+     "@movieName": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "movieNameHint": "نام فیلم را وارد کنید",
+     "@movieNameHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "movieIsRequired": "نام فیلم لازم است",
+     "@movieIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbId": "شناسه ی ای ام دی بی",
+     "@imdbId": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbIdHint": "شناسه ی ای ام دی بی را وارد کنید",
+     "@imdbIdHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbIdIsRequired": "شناسه ی ای ام دی بی لازم است",
+     "@imdbIdIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "country": "کشور",
+     "@country": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "countryHint": "کشور فیلم را وارد کنید",
+     "@countryHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "countryIsRequired": "کشور فیلم لازم است",
+     "@countryIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "year": "سال",
+     "@year": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "yearHint": "سال تهیه فیلم را وارد کنید",
+     "@yearHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "yearIsRequired": "سال تهیه لازم است",
+     "@yearIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "director": "کارگردان",
+     "@director": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "directorHint": "کارگردان را وارد کنید",
+     "@directorHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "directorIsRequired": "کارگردان لازم است",
+     "@directorIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRate": "امتیاز در ای ام دی بی",
+     "@imdbRate": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRateHint": "امتیاز در ام دی بی را وارد کنید",
+     "@imdbRateHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRateIsRequired": "Imdb rate is required",
+     "@imdbRateIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVote": "تعداد رای در ای ام دبی",
+     "@imdbVote": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVoteHint": "تعداد رای را وارد کنید",
+     "@imdbVoteHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVoteIsRequired": "تعداد رای در ام دی بی لازم است",
+     "@imdbVoteIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "poster": "پوستر",
+     "@poster": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "saveMovie": "ذخیره فیلم",
+     "@saveMovie": {
+       "type": "text",
+       "placeholders": {}
+     }
 }

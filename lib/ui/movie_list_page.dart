@@ -112,6 +112,7 @@ class _MovieListPageState extends State<MovieListPage> {
                     Radius.circular(32.0),
                   ),
                 ),
+                hintText: AppLocalizations.of(context).searchLabel,
                 enabled: false
               /* suffix: IconButton(icon: Icon(Icons.clear), onPressed: (){
 
@@ -176,7 +177,7 @@ class _MovieListPageState extends State<MovieListPage> {
           },
         ),
       ),
-      preferredSize: Size(double.infinity, 56),
+      preferredSize: Size(double.infinity, 70),
     );
   }
 

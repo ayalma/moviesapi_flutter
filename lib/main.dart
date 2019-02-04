@@ -6,6 +6,7 @@ import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_list_page.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/services.dart';
 
 // This is our global ServiceLocator
 GetIt getIt = new GetIt();
@@ -27,6 +28,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
         AppLocalizations.of(context).title,
 
         theme: ThemeData(
+          fontFamily: "Iran",
           brightness: Brightness.light,
           primarySwatch: Colors.blue,
           buttonTheme: ButtonThemeData(

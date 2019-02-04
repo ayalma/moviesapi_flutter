@@ -20,5 +20,136 @@
   "@movieApi": {
     "type": "text",
     "placeholders": {}
-  }
+  },
+   "searchLabel": "Enter the movie name",
+    "@searchLabel": {
+      "type": "text",
+      "placeholders": {}
+    }
+   ,
+   "noInternet": "No internet connection",
+   "@noInternet": {
+     "type": "text",
+     "placeholders": {}
+   },
+   "retry": "Retry",
+   "@retry": {
+     "type": "text",
+     "placeholders": {}
+   },
+   "movieName": "Movie name",
+     "@movieName": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "movieNameHint": "Enter movie name",
+     "@movieNameHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "movieIsRequired": "Movie name is required",
+     "@movieIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbId": "Imdb Id",
+     "@imdbId": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbIdHint": "Enter Imdb id of film",
+     "@imdbIdHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbIdIsRequired": "Imdb id is required",
+     "@imdbIdIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "country": "Country",
+     "@country": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "countryHint": "Enter Country of film",
+     "@countryHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "countryIsRequired": "Country is required",
+     "@countryIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "year": "Year",
+     "@year": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "yearHint": "Enter year of film",
+     "@yearHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "yearIsRequired": "Year is required",
+     "@yearIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "director": "Director",
+     "@director": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "directorHint": "Enter director of film",
+     "@directorHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "directorIsRequired": "Director is required",
+     "@directorIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRate": "Imdb rate",
+     "@imdbRate": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRateHint": "Enter imdb rate of film",
+     "@imdbRateHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbRateIsRequired": "Imdb rate is required",
+     "@imdbRateIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVote": "Imdb vote",
+     "@imdbVote": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVoteHint": "Enter imdb vote of film",
+     "@imdbVoteHint": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "imdbVoteIsRequired": "Imdb vote is required",
+     "@imdbVoteIsRequired": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "poster": "Poster",
+     "@poster": {
+       "type": "text",
+       "placeholders": {}
+     },
+     "saveMovie": "Save Movie",
+     "@saveMovie": {
+       "type": "text",
+       "placeholders": {}
+     }
 }

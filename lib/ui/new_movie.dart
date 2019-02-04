@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:moviesapi_flutter/config/localizations.dart';
 import 'package:moviesapi_flutter/datasource/model/new_movie_request.dart';
 import 'package:moviesapi_flutter/main.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
@@ -31,7 +32,7 @@ class _NewMoviePageState extends State<NewMoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("New movie"),
+        title: Text(AppLocalizations.of(context).newMovie),
       ),
       body: Builder(builder: (context) {
         return Column(
@@ -50,10 +51,10 @@ class _NewMoviePageState extends State<NewMoviePage> {
                           TextFormField(
                             controller: movieNameCtrl,
                             decoration: getTextFieldDecoration(
-                                "Movie name", "Enter movie name", Icons.movie),
+                                AppLocalizations.of(context).movieName,  AppLocalizations.of(context).movieNameHint, Icons.movie),
                             validator: (value) {
                               if (value == null || value.length == 0) {
-                                return "Movie name is required";
+                                return AppLocalizations.of(context).movieIsRequired;
                               }
                             },
                           ),
@@ -62,11 +63,11 @@ class _NewMoviePageState extends State<NewMoviePage> {
                           ),
                           TextFormField(
                             controller: imdbIdCtrl,
-                            decoration: getTextFieldDecoration("Imdb id",
-                                "Enter movie imdb id ", Icons.edit_attributes),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).imdbId,
+                                AppLocalizations.of(context).imdbIdHint, Icons.edit_attributes),
                             validator: (value) {
                               if (value == null || value.length == 0) {
-                                return "Imdb id is required";
+                                return AppLocalizations.of(context).imdbIdIsRequired;
                               }
                             },
                           ),
@@ -75,11 +76,11 @@ class _NewMoviePageState extends State<NewMoviePage> {
                           ),
                           TextFormField(
                             controller: countryCtrl,
-                            decoration: getTextFieldDecoration("Country",
-                                "Enter movie country name ", Icons.movie),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).country,
+                                AppLocalizations.of(context).countryHint, Icons.movie),
                             validator: (value) {
                               if (value == null || value.length == 0) {
-                                return "country is required";
+                                return AppLocalizations.of(context).countryIsRequired;
                               }
                             },
                           ),
@@ -88,11 +89,11 @@ class _NewMoviePageState extends State<NewMoviePage> {
                           ),
                           TextFormField(
                             controller: yearCtrl,
-                            decoration: getTextFieldDecoration("Year",
-                                "Enter movie created year ", Icons.movie),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).year,
+                                AppLocalizations.of(context).yearHint, Icons.movie),
                             validator: (value) {
                               if (value == null || value.length == 0) {
-                                return "Year is required";
+                                return AppLocalizations.of(context).yearIsRequired;
                               }
                             },
                           ),
@@ -101,24 +102,24 @@ class _NewMoviePageState extends State<NewMoviePage> {
                           ),
                           TextFormField(
                             controller: directorCtrl,
-                            decoration: getTextFieldDecoration("director",
-                                "Enter movie diretor name ", Icons.movie),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).director,
+                                AppLocalizations.of(context).directorHint, Icons.movie),
                           ),
                           SizedBox(
                             height: 16.0,
                           ),
                           TextFormField(
                             controller: imdbRateCtrl,
-                            decoration: getTextFieldDecoration("Imdb rate",
-                                "Enter movie imdb rate ", Icons.movie),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).imdbRate,
+                                AppLocalizations.of(context).imdbRateHint, Icons.movie),
                           ),
                           SizedBox(
                             height: 16.0,
                           ),
                           TextFormField(
                             controller: imdbVoteCtrl,
-                            decoration: getTextFieldDecoration("Imdb vote",
-                                "Enter movie imdb vote ", Icons.movie),
+                            decoration: getTextFieldDecoration(AppLocalizations.of(context).imdbVote,
+                                AppLocalizations.of(context).imdbVoteHint, Icons.movie),
                           ),
                           SizedBox(
                             height: 16.0,
@@ -127,7 +128,7 @@ class _NewMoviePageState extends State<NewMoviePage> {
                             children: <Widget>[
                               Expanded(
                                   child: Text(
-                                "Poster",
+                                    AppLocalizations.of(context).poster,
                                 style: Theme.of(context).textTheme.title,
                               )),
                               IconButton(
@@ -208,7 +209,7 @@ class _NewMoviePageState extends State<NewMoviePage> {
                                 } else {}
                               },
                               icon: Icon(Icons.send),
-                              label: Text("Save Movie"),
+                              label: Text(AppLocalizations.of(context).saveMovie),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16.0),
                               ),
