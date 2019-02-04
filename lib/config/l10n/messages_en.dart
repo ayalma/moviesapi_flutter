@@ -20,9 +20,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "country" : MessageLookupByLibrary.simpleMessage("Country"),
+    "countryHint" : MessageLookupByLibrary.simpleMessage("Enter Country of film"),
+    "countryIsRequired" : MessageLookupByLibrary.simpleMessage("Country is required"),
+    "director" : MessageLookupByLibrary.simpleMessage("Director"),
+    "directorHint" : MessageLookupByLibrary.simpleMessage("Enter director of film"),
+    "directorIsRequired" : MessageLookupByLibrary.simpleMessage("Director is required"),
     "hello" : MessageLookupByLibrary.simpleMessage("Hello"),
+    "imdbId" : MessageLookupByLibrary.simpleMessage("Imdb Id"),
+    "imdbIdHint" : MessageLookupByLibrary.simpleMessage("Enter Imdb id of film"),
+    "imdbIdIsRequired" : MessageLookupByLibrary.simpleMessage("Imdb id is required"),
+    "imdbRate" : MessageLookupByLibrary.simpleMessage("Imdb rate"),
+    "imdbRateHint" : MessageLookupByLibrary.simpleMessage("Enter imdb rate of film"),
+    "imdbRateIsRequired" : MessageLookupByLibrary.simpleMessage("Imdb rate is required"),
+    "imdbVote" : MessageLookupByLibrary.simpleMessage("Imdb vote"),
+    "imdbVoteHint" : MessageLookupByLibrary.simpleMessage("Enter imdb vote of film"),
+    "imdbVoteIsRequired" : MessageLookupByLibrary.simpleMessage("Imdb vote is required"),
     "movieApi" : MessageLookupByLibrary.simpleMessage("Movie Api"),
+    "movieIsRequired" : MessageLookupByLibrary.simpleMessage("Movie name is required"),
+    "movieName" : MessageLookupByLibrary.simpleMessage("Movie name"),
+    "movieNameHint" : MessageLookupByLibrary.simpleMessage("Enter movie name"),
     "newMovie" : MessageLookupByLibrary.simpleMessage("New Movie"),
-    "title" : MessageLookupByLibrary.simpleMessage("Hello world App")
+    "noInternet" : MessageLookupByLibrary.simpleMessage("No internet connection"),
+    "poster" : MessageLookupByLibrary.simpleMessage("Poster"),
+    "retry" : MessageLookupByLibrary.simpleMessage("Retry"),
+    "saveMovie" : MessageLookupByLibrary.simpleMessage("Save Movie"),
+    "searchLabel" : MessageLookupByLibrary.simpleMessage("Enter the movie name"),
+    "title" : MessageLookupByLibrary.simpleMessage("Hello world App"),
+    "year" : MessageLookupByLibrary.simpleMessage("Year"),
+    "yearHint" : MessageLookupByLibrary.simpleMessage("Enter year of film"),
+    "yearIsRequired" : MessageLookupByLibrary.simpleMessage("Year is required")
   };
 }

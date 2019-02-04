@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesapi_flutter/config/localizations.dart';
 
 class LoadingView extends StatelessWidget {
 
@@ -21,7 +22,7 @@ class LoadingView extends StatelessWidget {
             height: 8.0,
           ),
           Text(
-            "No internet connection",
+            AppLocalizations.of(context).noInternet,
             style: Theme.of(context).textTheme.subhead,
           ),
           SizedBox(
@@ -30,7 +31,7 @@ class LoadingView extends StatelessWidget {
           OutlineButton.icon(
             onPressed: onPressed,
             icon: Icon(Icons.refresh),
-            label: Text("retry"),
+            label: Text(AppLocalizations.of(context).retry),
           ),
         ],
       ),
