@@ -1,12 +1,8 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/datasource/model/movie.dart';
-import 'package:moviesapi_flutter/datasource/model/movie_list_response.dart';
 import 'package:moviesapi_flutter/main.dart';
-import 'package:moviesapi_flutter/repository/movieRepository.dart';
 import 'package:moviesapi_flutter/ui/loading_view.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_page.dart';
