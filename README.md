@@ -2,14 +2,24 @@
 
 http:&#x2F;&#x2F;moviesapi.ir simple client in flutter
 
-## Getting Started
+#Shots
 
-This project is a starting point for a Flutter application.
+#Pic1 (Movie list):
 
-A few resources to get you started if this is your first Flutter project:
+<img src="art/movie_list.png" alt="Preview" width="320" height="640">
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+#Pic2 (Search):
+
+<img src="art/search.png" alt="Preview" width="320" height="640">
+
+#Pic3 (Detail):
+
+<img src="art/detail.png" alt="Preview" width="320" height="640">
+
+#Pic4 (New Movie):
+
+<img src="art/new_movie.png" alt="Preview" width="320" height="640">
+
 
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.io/docs), which offers tutorials, 
