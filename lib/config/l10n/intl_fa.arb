@@ -1,0 +1,24 @@
+{
+  "@@last_modified": "2019-02-04T10:47:41.036050",
+  "title": "برنامه تستی",
+  "@title": {
+    "description": "The application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "سلام",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "newMovie": "فیلم جدید",
+  "@newMovie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "movieApi": "فیلم ها",
+  "@movieApi": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

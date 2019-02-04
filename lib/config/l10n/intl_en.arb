@@ -1,0 +1,24 @@
+{
+  "@@last_modified": "2019-02-04T10:47:41.036050",
+  "title": "Hello world App",
+  "@title": {
+    "description": "The application title",
+    "type": "text",
+    "placeholders": {}
+  },
+  "hello": "Hello",
+  "@hello": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "newMovie": "New Movie",
+  "@newMovie": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "movieApi": "Movie Api",
+  "@movieApi": {
+    "type": "text",
+    "placeholders": {}
+  }
+}
