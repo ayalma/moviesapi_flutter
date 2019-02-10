@@ -48,11 +48,12 @@ class MyApp extends StatelessWidget {
 
         theme: ThemeData(
           fontFamily: "Iran",
+          scaffoldBackgroundColor: Colors.grey,
           brightness: Brightness.light,
           primarySwatch: Colors.indigo,
           accentColor: Colors.pinkAccent,
           buttonTheme: ButtonThemeData(
-            splashColor: Colors.green,
+            splashColor: Colors.pinkAccent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),
