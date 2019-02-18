@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviesapi_flutter/config/localizations.dart';
 import 'package:moviesapi_flutter/datasource/api/movie_api.dart';
 import 'package:moviesapi_flutter/repository/movieRepository.dart';
+import 'package:moviesapi_flutter/ui/intor_page.dart';
 import 'package:moviesapi_flutter/ui/movie_list_bloc.dart';
 import 'package:moviesapi_flutter/ui/movie_list_page.dart';
 import 'package:get_it/get_it.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
 
         ),
         showSemanticsDebugger: false,
-        home: MovieListPage());
+        home: IntroPage());
   }
 }
 
